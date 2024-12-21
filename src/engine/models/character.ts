@@ -7,6 +7,7 @@ import {
   PointLight,
 } from "three";
 import type { Engine } from "../engine";
+import { layers } from "../data/layers/layers.ts"
 
 export default class Character {
   mesh: Mesh;
@@ -39,18 +40,17 @@ export default class Character {
       this.updateBoundingBox();
       this.checkGroundCollision();
     } else {
-      console.log('gagné')
       this.finishLevel();
     }
   }
 
   createCharacter() {
-    const {x, z} = this.engine.layer.characterPlacement;
+    const {x, z} = layers[this.engine.layer].characterPlacement;
     const box = new BoxGeometry(0.4, 0.4, 0.4);
     const material = new ShaderMaterial({
       transparent: true,
       uniforms: {
-        emissiveColor: { value: new Vector3(9, 4, 8) },
+        emissiveColor: { value: new Vector3(9, 4, 1) },
         uInstanceCount: { value: 40 },
       },
       vertexShader: `
@@ -158,11 +158,11 @@ export default class Character {
           if (this.vecteur_mouvement.x > 0) {
             //droite (x+)
             position.x =
-              obstacleBox.min.x - characterBox.max.x + this.mesh.position.x;
+              obstacleBox.min.x - characterBox.max.x + this.mesh.position.x + 0.003;
           } else if (this.vecteur_mouvement.x < 0) {
             //gauche (x-)
             position.x =
-              obstacleBox.max.x - characterBox.min.x + this.mesh.position.x;
+              obstacleBox.max.x - characterBox.min.x + this.mesh.position.x - 0.003;
           }
         }
       }
@@ -177,13 +177,25 @@ export default class Character {
 
   updateCameraPosition() {
     this.engine.camera.position.x +=
-      (this.mesh.position.x - this.engine.camera.position.x) * 0.05;
+      (this.mesh.position.x - this.engine.camera.position.x) * 0.04;
     this.engine.camera.position.z +=
-      (this.mesh.position.z - this.engine.camera.position.z + 3) * 0.05;
+      (this.mesh.position.z - this.engine.camera.position.z + 3) * 0.04;
   }
 
   updateBoundingBox() {
     this.boundingBox.setFromObject(this.mesh);
+  }
+
+  sendCompleteEndGameData() {
+    return {
+      setDeltaTime: '',
+      setAllDeltaTimeGames: '',
+      setAllPoints: '',
+      setPersonalBest: '',
+      setChosenCharacter: '',
+      setBestFindedWay: '',
+      chosenPseudo: '',
+    }
   }
 
   finishLevel() {

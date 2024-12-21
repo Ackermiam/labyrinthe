@@ -41,18 +41,21 @@ h1 {
 }
 
 button {
-  padding: 10px 20px;
-  background: white;
-  border: none;
-  border-radius: 4px;
+  padding: 25px 20px;
+  font-family: 'Play';
+  background: none;
+  color: white;
+  border: 3px solid white;
   cursor: pointer;
-  margin-right: 20px;
-  transition: all .3s;
+  width: 230px;
+  backdrop-filter: blur(20px);
+  transition: .3s;
+  margin-right: 15px;
 }
 
 button:hover {
-  filter: drop-shadow(-5px 5px 10px #f700ff);
-
+border: 3px solid rgb(255, 59, 239);
+filter: drop-shadow(0px 0px 10px pink)
 }
 
 button:last-child {

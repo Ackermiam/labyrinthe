@@ -7,9 +7,11 @@ import {
 } from "three";
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { choseLevel } from "./settings/level.ts"
+import { settings } from "../composables/handleSettings.ts"
 import Environment from "./models/environment.ts";
 import Character from "./models/character.ts";
+
+const { chosenLevel } = settings();
 
 export class Engine {
   scene: Scene;
@@ -25,7 +27,7 @@ export class Engine {
   };
   character: Character;
   environment: Environment;
-  layer: any;
+  layer: number;
 
   constructor(ref: HTMLElement) {
     const { width, height } = ref.getBoundingClientRect();
@@ -36,7 +38,7 @@ export class Engine {
     this.camera = new PerspectiveCamera(45, width / height);
     this.camera.position.set(0, 7, 8);
     this.camera.lookAt(0, -1.8, 4.5);
-    this.layer = choseLevel();
+    this.layer = chosenLevel.value;
 
     this.pixelRatio =
       width < 900
@@ -68,16 +70,15 @@ export class Engine {
     this.addChildren();
     this.setView();
     this.registerEventListeners();
-    this.renderer.render(this.scene, this.camera);
     this.tick();
   }
 
   tick() {
     this.renderer.render(this.scene, this.camera);
 
-    this.tickChildren();
     this.animationFrameId = requestAnimationFrame(() => {
       this.tick();
+      this.tickChildren();
     });
   }
 

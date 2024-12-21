@@ -1,5 +1,6 @@
 import { BoxGeometry, MeshPhongMaterial, Mesh, Box3 } from "three";
 import type { Engine } from "../engine";
+import { layers } from "../data/layers/layers.ts"
 
 export default class Environment {
   mesh: any;
@@ -54,7 +55,7 @@ export default class Environment {
   }
 
   createLevelPlacement() {
-    this.engine.layer.level.forEach((item) => {
+    layers[this.engine.layer].level.forEach((item) => {
       const cubePos = {
         x: item.x,
         z: item.z,

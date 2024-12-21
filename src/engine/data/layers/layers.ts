@@ -1137,7 +1137,7 @@ export const layers = [
       x: 10,
       z: 11,
     },
-    name: "Vladéousse",
+    name: "Vladeousse",
     level: [
       {
         x: 0,
@@ -5917,7 +5917,7 @@ export const layers = [
       "x": 2,
       "z": 17
     },
-    "name": "KérauChane",
+    "name": "KerauChane",
     "level": [
       {
         "x": 0,
