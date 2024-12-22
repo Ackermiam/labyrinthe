@@ -29,8 +29,6 @@ export default class Character {
     this.boundingBox = new Box3();
     this.light = new PointLight(0xff00d4, 0.3, 4);
     this.mesh.add(this.light);
-
-    this.tick();
   }
 
   tick() {
@@ -158,11 +156,11 @@ export default class Character {
           if (this.vecteur_mouvement.x > 0) {
             //droite (x+)
             position.x =
-              obstacleBox.min.x - characterBox.max.x + this.mesh.position.x + 0.003;
+              obstacleBox.min.x - characterBox.max.x + this.mesh.position.x;
           } else if (this.vecteur_mouvement.x < 0) {
             //gauche (x-)
             position.x =
-              obstacleBox.max.x - characterBox.min.x + this.mesh.position.x - 0.003;
+              obstacleBox.max.x - characterBox.min.x + this.mesh.position.x;
           }
         }
       }
@@ -186,21 +184,8 @@ export default class Character {
     this.boundingBox.setFromObject(this.mesh);
   }
 
-  sendCompleteEndGameData() {
-    return {
-      setDeltaTime: '',
-      setAllDeltaTimeGames: '',
-      setAllPoints: '',
-      setPersonalBest: '',
-      setChosenCharacter: '',
-      setBestFindedWay: '',
-      chosenPseudo: '',
-    }
-  }
-
   finishLevel() {
-    const event = new CustomEvent('finishLevel', {detail: 'finishLevel'}
-    )
+    const event = new CustomEvent('finishLevel', {detail: 'finishLevel'})
 
     window.dispatchEvent(event);
   }

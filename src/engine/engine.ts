@@ -25,8 +25,8 @@ export class Engine {
     x: number;
     y: number;
   };
-  character: Character;
-  environment: Environment;
+  character: Character | null = null;
+  environment: Environment | null = null;
   layer: number;
 
   constructor(ref: HTMLElement) {
@@ -50,9 +50,6 @@ export class Engine {
       powerPreference: "low-power",
     });
 
-    this.environment = new Environment(this);
-    this.character = new Character(this);
-
     this.renderer.setClearColor(0, 0);
     this.renderer.setPixelRatio(this.pixelRatio);
     const resizeCanvas = window.devicePixelRatio > 1;
@@ -65,12 +62,8 @@ export class Engine {
     //this.scene.add(directionalLight);
 
     ref.appendChild(this.renderer.domElement);
-    this.meshs.push(this.environment, this.character);
 
-    this.addChildren();
-    this.setView();
-    this.registerEventListeners();
-    this.tick();
+    this.setup();
   }
 
   tick() {
@@ -82,17 +75,30 @@ export class Engine {
     });
   }
 
-  startAnimation() {
-    if (this.animationFrameId === null) {
-      this.tick();
-    }
+  setup() {
+    this.environment = new Environment(this);
+    this.character = new Character(this);
+    this.meshs.push(this.environment, this.character);
+    this.addChildren();
+    this.setView();
+    this.registerEventListeners();
+    this.tick();
   }
 
-  stopAnimation() {
+  restart() {
+    this.layer = chosenLevel.value;
+    this.scene = new Scene();
+    this.setup();
+  }
+
+  stop() {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
     }
+    this.environment = null;
+    this.character = null;
+    this.meshs = [];
   }
 
   addChildren() {
@@ -120,8 +126,9 @@ export class Engine {
     window.addEventListener("mousemove", (e) => {
       this.mousePos = { x: e.clientX, y: e.clientY };
     });
+
     window.addEventListener("finishLevel", () => {
-      this.stopAnimation();
-    })
+      this.stop();
+    });
   }
 }

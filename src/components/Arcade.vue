@@ -11,11 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import {settings} from "../composables/handleSettings";
 import {layers} from "../engine/data/layers/layers";
 
-const { triggerGame, selectedLevel } = settings();
+const { triggerGame } = settings();
 </script>
 
 <style scoped>
@@ -24,17 +23,28 @@ const { triggerGame, selectedLevel } = settings();
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
   width: 100vw;
   background: black;
+  padding: 50px 0;
 }
 
 .Home__levels {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 90%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 900px) {
+  .Home__levels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .Home__levels {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .Home__levels__level {
@@ -47,7 +57,9 @@ h1 {
   font-size: 6em;
   font-family: 'Play';
   animation: animate infinite 4s;
+  text-align: center;
 }
+
 h2 {
   color: white;
   font-size: 2em;
@@ -95,5 +107,4 @@ button:last-child {
     filter: drop-shadow(-5px 5px 20px #000000);
   }
 }
-
 </style>

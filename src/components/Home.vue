@@ -10,8 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import {settings} from "../composables/handleSettings";
+import { settings } from "../composables/handleSettings";
 
 const { triggerArcadeMode, triggerGame } = settings();
 </script>
@@ -36,26 +35,26 @@ const { triggerArcadeMode, triggerGame } = settings();
 h1 {
   color: white;
   font-size: 6em;
-  font-family: 'Play';
+  font-family: "Play";
   animation: animate infinite 4s;
 }
 
 button {
   padding: 25px 20px;
-  font-family: 'Play';
+  font-family: "Play";
   background: none;
   color: white;
   border: 3px solid white;
   cursor: pointer;
   width: 230px;
   backdrop-filter: blur(20px);
-  transition: .3s;
+  transition: 0.3s;
   margin-right: 15px;
 }
 
 button:hover {
-border: 3px solid rgb(255, 59, 239);
-filter: drop-shadow(0px 0px 10px pink)
+  border: 3px solid rgb(255, 59, 239);
+  filter: drop-shadow(0px 0px 10px pink);
 }
 
 button:last-child {
@@ -81,5 +80,4 @@ button:last-child {
     filter: drop-shadow(-5px 5px 20px #000000);
   }
 }
-
 </style>
