@@ -1,6 +1,25 @@
 <template>
   <section class="Home">
     <div ref="scene" class="Scene"></div>
+    <button class="details" @click="showDetails = !showDetails">?</button>
+    <div v-if="showDetails" class="Popin">
+      <div class="Popin__controls">
+        <p>Z</p>
+        <span>Avancer</span>
+      </div>
+      <div class="Popin__controls">
+        <p>Q</p>
+        <span>Gauche</span>
+      </div>
+      <div class="Popin__controls">
+        <p>S</p>
+        <span>Reculer</span>
+      </div>
+      <div class="Popin__controls">
+        <p>D</p>
+        <span>Droite</span>
+      </div>
+    </div>
     <div v-if="displayMenu" class="Home__win">
       <h2>BRAVO !</h2>
       <button @click="menu()">Menu</button>
@@ -20,6 +39,7 @@ const { triggerHome, selectedLevel } = settings();
 const scene = ref();
 let engine: Engine;
 const displayMenu = ref(false);
+const showDetails = ref(false);
 
 let menu = () => {
   displayMenu.value = false;
@@ -90,6 +110,37 @@ h2 {
   color: white;
   font-size: 5em;
   animation: animate infinite 4s;
+}
+
+.details {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0 10px;
+  width: auto;
+  font-size: 25px;
+}
+
+.Popin {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  backdrop-filter: blur(30px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.Popin__controls p {
+  border: 2px solid white;
+  width: 60px;
+  padding: 10px 0;
 }
 
 @keyframes animate {

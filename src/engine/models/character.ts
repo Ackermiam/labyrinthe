@@ -20,7 +20,7 @@ export default class Character {
 
   constructor(engine: Engine) {
     this.collideGround = true;
-    this.speed = 0.06;
+    this.speed = 4.5;
     this.mesh = new Mesh();
     this.engine = engine;
     this.createCharacter();
@@ -96,7 +96,7 @@ export default class Character {
     const anticipatedPosition = this.mesh.position.clone();
 
     if (this.vecteur_mouvement.z !== 0) {
-      anticipatedPosition.z += this.vecteur_mouvement.z * this.speed;
+      anticipatedPosition.z += this.vecteur_mouvement.z * this.speed * this.engine.delta;
       if (!this.checkObstacleCollision(anticipatedPosition)) {
         this.mesh.position.z = anticipatedPosition.z;
       } else {
@@ -105,7 +105,7 @@ export default class Character {
     }
 
     if (this.vecteur_mouvement.x !== 0) {
-      anticipatedPosition.x += this.vecteur_mouvement.x * this.speed;
+      anticipatedPosition.x += this.vecteur_mouvement.x * this.speed * this.engine.delta;
       if (!this.checkObstacleCollision(anticipatedPosition)) {
         this.mesh.position.x = anticipatedPosition.x;
       } else {
@@ -146,21 +146,21 @@ export default class Character {
           if (this.vecteur_mouvement.z > 0) {
             //avançant (z+)
             position.z =
-              obstacleBox.min.z - characterBox.max.z + this.mesh.position.z;
+              obstacleBox.min.z - characterBox.max.z + this.mesh.position.z + 0.003;
           } else if (this.vecteur_mouvement.z < 0) {
             //reculant (z-)
             position.z =
-              obstacleBox.max.z - characterBox.min.z + this.mesh.position.z;
+              obstacleBox.max.z - characterBox.min.z + this.mesh.position.z - 0.003;
           }
         } else if (axis === "x") {
           if (this.vecteur_mouvement.x > 0) {
             //droite (x+)
             position.x =
-              obstacleBox.min.x - characterBox.max.x + this.mesh.position.x;
+              obstacleBox.min.x - characterBox.max.x + this.mesh.position.x + 0.003;
           } else if (this.vecteur_mouvement.x < 0) {
             //gauche (x-)
             position.x =
-              obstacleBox.max.x - characterBox.min.x + this.mesh.position.x;
+              obstacleBox.max.x - characterBox.min.x + this.mesh.position.x - 0.003;
           }
         }
       }

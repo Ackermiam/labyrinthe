@@ -41,7 +41,8 @@ h1 {
 
 button {
   padding: 25px 20px;
-  font-family: "Play";
+  font-family: "Archivo";
+  font-size: 2em;
   background: none;
   color: white;
   border: 3px solid white;

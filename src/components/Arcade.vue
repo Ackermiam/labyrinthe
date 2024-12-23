@@ -68,7 +68,8 @@ h2 {
 
 button {
   padding: 25px 20px;
-  font-family: 'Play';
+  font-family: "Archivo";
+  font-size: 1.2em;
   background: none;
   color: white;
   border: 3px solid white;

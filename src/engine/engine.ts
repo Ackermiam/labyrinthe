@@ -4,6 +4,7 @@ import {
   PerspectiveCamera,
   Object3D,
   DirectionalLight,
+  Clock
 } from "three";
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -28,6 +29,8 @@ export class Engine {
   character: Character | null = null;
   environment: Environment | null = null;
   layer: number;
+  clock: Clock;
+  delta: number;
 
   constructor(ref: HTMLElement) {
     const { width, height } = ref.getBoundingClientRect();
@@ -39,6 +42,8 @@ export class Engine {
     this.camera.position.set(0, 7, 8);
     this.camera.lookAt(0, -1.8, 4.5);
     this.layer = chosenLevel.value;
+    this.clock = new Clock();
+    this.delta = 0;
 
     this.pixelRatio =
       width < 900
@@ -71,6 +76,7 @@ export class Engine {
 
     this.animationFrameId = requestAnimationFrame(() => {
       this.tick();
+      this.delta = this.clock.getDelta();
       this.tickChildren();
     });
   }
