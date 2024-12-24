@@ -3,6 +3,7 @@ import { layers } from "../engine/data/layers/layers";
 
 const display = ref('Home');
 const chosenLevel = ref(0);
+const isSpeedrun = ref(false);
 
 export const settings = () => {
   const choseLevel = () => {
@@ -13,6 +14,11 @@ export const settings = () => {
   const selectedLevel = (selected?: number) => {
     const chosen =  selected != undefined ? selected : choseLevel();
     chosenLevel.value = chosen
+  }
+
+  const selectSpeedrun = () => {
+    isSpeedrun.value = true;
+    display.value = 'Game'
   }
 
   const triggerHome = () => {
@@ -35,6 +41,7 @@ export const settings = () => {
     triggerGame,
     triggerArcadeMode,
     selectedLevel,
+    selectSpeedrun,
     choseLevel
   }
 }

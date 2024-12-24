@@ -94,11 +94,12 @@ export default class Character {
 
   moveCharacter() {
     const anticipatedPosition = this.mesh.position.clone();
+    let newPosition = this.mesh.position.clone();
 
     if (this.vecteur_mouvement.z !== 0) {
       anticipatedPosition.z += this.vecteur_mouvement.z * this.speed * this.engine.delta;
       if (!this.checkObstacleCollision(anticipatedPosition)) {
-        this.mesh.position.z = anticipatedPosition.z;
+        newPosition.z = anticipatedPosition.z;
       } else {
         this.correctPosition(anticipatedPosition, "z");
       }
@@ -107,12 +108,15 @@ export default class Character {
     if (this.vecteur_mouvement.x !== 0) {
       anticipatedPosition.x += this.vecteur_mouvement.x * this.speed * this.engine.delta;
       if (!this.checkObstacleCollision(anticipatedPosition)) {
-        this.mesh.position.x = anticipatedPosition.x;
+        newPosition.x = anticipatedPosition.x;
       } else {
         this.correctPosition(anticipatedPosition, "x");
       }
     }
+
+    this.mesh.position.copy(newPosition);
   }
+
 
   checkObstacleCollision(position: Vector3): boolean {
     const characterBox = this.boundingBox.clone();
@@ -138,29 +142,27 @@ export default class Character {
 
   correctPosition(position: Vector3, axis: "x" | "z") {
     const characterBox = this.boundingBox.clone();
-    characterBox.translate(position.clone().sub(this.mesh.position)); // Simule le déplacement
+    characterBox.translate(position.clone().sub(this.mesh.position));
 
     for (const obstacleBox of this.engine.environment.boundingBoxes) {
       if (characterBox.intersectsBox(obstacleBox)) {
         if (axis === "z") {
           if (this.vecteur_mouvement.z > 0) {
-            //avançant (z+)
-            position.z =
-              obstacleBox.min.z - characterBox.max.z + this.mesh.position.z + 0.003;
+            // avance
+            position.z = Math.min(position.z, obstacleBox.min.z - this.boundingBox.max.z);
           } else if (this.vecteur_mouvement.z < 0) {
-            //reculant (z-)
-            position.z =
-              obstacleBox.max.z - characterBox.min.z + this.mesh.position.z - 0.003;
+            // recule
+            position.z = Math.max(position.z, obstacleBox.max.z - this.boundingBox.min.z);
           }
-        } else if (axis === "x") {
+        }
+
+        if (axis === "x") {
           if (this.vecteur_mouvement.x > 0) {
-            //droite (x+)
-            position.x =
-              obstacleBox.min.x - characterBox.max.x + this.mesh.position.x + 0.003;
+            // droite
+            position.x = Math.min(position.x, obstacleBox.min.x - this.boundingBox.max.x);
           } else if (this.vecteur_mouvement.x < 0) {
-            //gauche (x-)
-            position.x =
-              obstacleBox.max.x - characterBox.min.x + this.mesh.position.x - 0.003;
+            // gauche
+            position.x = Math.max(position.x, obstacleBox.max.x - this.boundingBox.min.x);
           }
         }
       }
@@ -173,6 +175,7 @@ export default class Character {
     }
   }
 
+
   updateCameraPosition() {
     this.engine.camera.position.x +=
       (this.mesh.position.x - this.engine.camera.position.x) * 0.04;
@@ -182,6 +185,7 @@ export default class Character {
 
   updateBoundingBox() {
     this.boundingBox.setFromObject(this.mesh);
+    this.boundingBox.expandByScalar(-0.01);
   }
 
   finishLevel() {

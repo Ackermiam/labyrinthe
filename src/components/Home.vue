@@ -4,7 +4,7 @@
     <div class="Home__Buttons">
       <button @click="triggerGame()">Aleatoire</button>
       <button @click="triggerArcadeMode()">Levels</button>
-      <button>Performance</button>
+      <button @click="selectSpeedrun()">Performance</button>
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { settings } from "../composables/handleSettings";
 
-const { triggerArcadeMode, triggerGame } = settings();
+const { triggerArcadeMode, triggerGame, selectSpeedrun } = settings();
 </script>
 
 <style scoped>
