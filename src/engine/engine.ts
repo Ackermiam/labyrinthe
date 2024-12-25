@@ -136,5 +136,8 @@ export class Engine {
     window.addEventListener("finishLevel", () => {
       this.stop();
     });
+    window.addEventListener("finishSpeedrunLevel", () => {
+      this.stop();
+    });
   }
 }

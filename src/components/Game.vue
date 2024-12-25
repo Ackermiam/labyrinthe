@@ -29,7 +29,7 @@
     <div v-if="displayMenu && isSpeedrun" class="Home__win">
       <h2>BRAVO !</h2>
       <button @click="menu()">Menu</button>
-      <button @click="restart()">Suivant</button>
+      <button @click="nextSpeedrunMap()">Suivant</button>
     </div>
   </section>
 </template>
@@ -77,6 +77,7 @@ window.addEventListener("finishLevel", () => {
 
 window.addEventListener("finishSpeedrunLevel", () => {
   displayMenu.value = true;
+  console.log('je suis toujourss là')
 });
 
 onMounted(() => {
