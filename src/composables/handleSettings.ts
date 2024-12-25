@@ -37,6 +37,7 @@ export const settings = () => {
   return {
     display,
     chosenLevel,
+    isSpeedrun,
     triggerHome,
     triggerGame,
     triggerArcadeMode,

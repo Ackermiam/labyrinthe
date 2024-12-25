@@ -3,7 +3,7 @@
     <h1>Labyrinthe</h1>
     <div class="Home__Buttons">
       <button @click="triggerGame()">Aleatoire</button>
-      <button @click="triggerArcadeMode()">Levels</button>
+      <button @click="triggerArcadeMode()">Arcade</button>
       <button @click="selectSpeedrun()">Performance</button>
     </div>
   </div>

@@ -7,7 +7,11 @@ import {
   PointLight,
 } from "three";
 import type { Engine } from "../engine";
-import { layers } from "../data/layers/layers.ts"
+import { layers } from "../data/layers/layers.ts";
+import { settings } from "../../composables/handleSettings";
+
+
+const { isSpeedrun } = settings();
 
 export default class Character {
   mesh: Mesh;
@@ -189,8 +193,9 @@ export default class Character {
   }
 
   finishLevel() {
-    const event = new CustomEvent('finishLevel', {detail: 'finishLevel'})
-
-    window.dispatchEvent(event);
+    const finishSpeedrunLevel = new CustomEvent('finishSpeedrunLevel', {detail: 'finishSpeedrunLevel'})
+    const finishLevel = new CustomEvent('finishLevel', {detail: 'finishLevel'})
+    
+    window.dispatchEvent(isSpeedrun.value ? finishSpeedrunLevel: finishLevel);
   }
 }

@@ -20,11 +20,16 @@
         <span>Droite</span>
       </div>
     </div>
-    <div v-if="displayMenu" class="Home__win">
+    <div v-if="displayMenu && !isSpeedrun" class="Home__win">
       <h2>BRAVO !</h2>
       <button @click="menu()">Menu</button>
       <button @click="restart()">Recommencer</button>
       <button @click="random()">Map aléatoire</button>
+    </div>
+    <div v-if="displayMenu && isSpeedrun" class="Home__win">
+      <h2>BRAVO !</h2>
+      <button @click="menu()">Menu</button>
+      <button @click="restart()">Suivant</button>
     </div>
   </section>
 </template>
@@ -33,16 +38,20 @@
 import { ref, onMounted } from "vue";
 import { Engine } from "../engine/engine";
 import { settings } from "../composables/handleSettings";
+import { speedrunSettings } from "../composables/speedrunSettings";
 
-const { triggerHome, selectedLevel } = settings();
+const { triggerHome, selectedLevel, isSpeedrun } = settings();
+const { incrementIndexDataRun }                  = speedrunSettings();
 
-const scene = ref();
 let engine: Engine;
+
+const scene       = ref();
 const displayMenu = ref(false);
 const showDetails = ref(false);
 
 let menu = () => {
   displayMenu.value = false;
+  isSpeedrun.value  = false;
   triggerHome();
 }
 
@@ -57,7 +66,16 @@ let random = () => {
   displayMenu.value = false;
 };
 
+let nextSpeedrunMap = () => {
+  incrementIndexDataRun();
+  restart();
+}
+
 window.addEventListener("finishLevel", () => {
+  displayMenu.value = true;
+});
+
+window.addEventListener("finishSpeedrunLevel", () => {
   displayMenu.value = true;
 });
 

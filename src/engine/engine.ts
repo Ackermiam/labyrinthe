@@ -12,7 +12,7 @@ import { settings } from "../composables/handleSettings.ts"
 import Environment from "./models/environment.ts";
 import Character from "./models/character.ts";
 
-const { chosenLevel } = settings();
+const { chosenLevel, isSpeedrun } = settings();
 
 export class Engine {
   scene: Scene;
