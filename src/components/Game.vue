@@ -29,7 +29,7 @@
     <div v-if="displayMenu && isSpeedrun" class="Home__win">
       <h2>BRAVO !</h2>
       <button @click="menu()">Menu</button>
-      <button @click="nextSpeedrunMap()">Suivant</button>
+      <button v-if="isFinished === false" @click="nextSpeedrunMap()">Suivant</button>
     </div>
   </section>
 </template>
@@ -40,8 +40,8 @@ import { Engine } from "../engine/engine";
 import { settings } from "../composables/handleSettings";
 import { speedrunSettings } from "../composables/speedrunSettings";
 
-const { triggerHome, selectedLevel, isSpeedrun } = settings();
-const { incrementIndexDataRun }                  = speedrunSettings();
+const { triggerHome, selectedLevel, isSpeedrun, chosenLevel } = settings();
+const { isFinished, selectedSpeedrunLevel, currentIndexDataRun } = speedrunSettings();
 
 let engine: Engine;
 
@@ -56,19 +56,20 @@ let menu = () => {
 }
 
 let restart = () => {
-  engine.restart();
+  engine.restart(chosenLevel.value);
   displayMenu.value = false;
 }
 
 let random = () => {
   selectedLevel();
-  engine.restart();
+  engine.restart(chosenLevel.value);
   displayMenu.value = false;
 };
 
 let nextSpeedrunMap = () => {
-  incrementIndexDataRun();
-  restart();
+  const level = selectedSpeedrunLevel()
+  engine.restart(level);
+  displayMenu.value = false;
 }
 
 window.addEventListener("finishLevel", () => {
@@ -77,7 +78,6 @@ window.addEventListener("finishLevel", () => {
 
 window.addEventListener("finishSpeedrunLevel", () => {
   displayMenu.value = true;
-  console.log('je suis toujourss là')
 });
 
 onMounted(() => {

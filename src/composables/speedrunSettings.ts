@@ -1,8 +1,8 @@
 import { ref } from "vue";
-import { layers } from "../engine/data/layers/layers";
 
 const currentIndexDataRun = ref(0);
 const currentTime = ref(0);
+const isFinished = ref(false);
 
 const speedrunData = [
   {
@@ -12,6 +12,12 @@ const speedrunData = [
     finished: false
   },
   {
+    mapIndex: 6,
+    duration: 0,
+    begin: false,
+    finished: false
+  },
+  /*{
     mapIndex: 1,
     duration: 0,
     begin: false,
@@ -34,26 +40,36 @@ const speedrunData = [
     duration: 0,
     begin: false,
     finished: false
-  },
+  },*/
 ]
+
+window.addEventListener("finishSpeedrunLevel", () => {
+  speedrunData[currentIndexDataRun.value].finished = true;
+  currentIndexDataRun.value++
+  if(currentIndexDataRun.value === speedrunData.length) {
+    console.log('egal !')
+    isFinished.value = true;
+    console.log(isFinished.value)
+  }
+})
 
 export const speedrunSettings = () => {
   const resetTime = () => {
     currentTime.value = 0
   };
 
-  const incrementIndexDataRun = () => {
-    if (currentIndexDataRun.value > 4) return;
-    currentIndexDataRun.value++
-  }
-
   const selectedSpeedrunLevel = () => {
-    return speedrunData[currentIndexDataRun.value].mapIndex
+    if (isFinished.value === true) {
+      return
+    } else {
+      return speedrunData[currentIndexDataRun.value].mapIndex
+    }
   }
 
   return {
     resetTime,
-    incrementIndexDataRun,
-    selectedSpeedrunLevel
+    selectedSpeedrunLevel,
+    isFinished,
+    currentIndexDataRun
   }
 }

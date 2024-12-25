@@ -91,8 +91,8 @@ export class Engine {
     this.tick();
   }
 
-  restart() {
-    this.layer = chosenLevel.value;
+  restart(indexMap: number) {
+    this.layer = indexMap;
     this.scene = new Scene();
     this.setup();
   }
