@@ -31,6 +31,11 @@
       <button @click="menu()">Menu</button>
       <button v-if="isFinished === false" @click="nextSpeedrunMap()">Suivant</button>
     </div>
+    <div v-if="isSpeedrun" class="timeSpeedrun">
+      <p v-for="(data, index) in speedrunData" :key="index">
+        Map {{index + 1}} : {{ data.readableDuration }}
+      </p>
+    </div>
   </section>
 </template>
 
@@ -41,7 +46,7 @@ import { settings } from "../composables/handleSettings";
 import { speedrunSettings } from "../composables/speedrunSettings";
 
 const { triggerHome, selectedLevel, isSpeedrun, chosenLevel } = settings();
-const { isFinished, selectedSpeedrunLevel, currentIndexDataRun } = speedrunSettings();
+const { isFinished, selectedSpeedrunLevel, currentIndexDataRun, speedrunData, resetSpeedrunData } = speedrunSettings();
 
 let engine: Engine;
 
@@ -50,6 +55,7 @@ const displayMenu = ref(false);
 const showDetails = ref(false);
 
 let menu = () => {
+  resetSpeedrunData();
   displayMenu.value = false;
   isSpeedrun.value  = false;
   triggerHome();
@@ -162,6 +168,23 @@ h2 {
   padding: 10px 0;
 }
 
+.timeSpeedrun {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.137);
+  padding: 10px;
+  border-radius: 8px;
+  width: 150px;
+  animation: animateSpeedrun 5s infinite;
+}
+
+.timeSpeedrun p {
+  margin: 0 0 10px 0;
+}
+
 @keyframes animate {
   0% {
     filter: drop-shadow(-5px 5px 20px #000000);
@@ -179,6 +202,25 @@ h2 {
 
   100% {
     filter: drop-shadow(-5px 5px 20px #000000);
+  }
+}
+@keyframes animateSpeedrun {
+  0% {
+    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25), 0 0px 10px rgba(225, 0, 255, 0.22)
+  }
+
+  25% {
+    box-shadow: 0 0px 28px rgba(0, 217, 255, 0.25), 0 0px 10px rgba(0, 217, 255, 0.25)
+  }
+  50% {
+    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25), 0 0px 10px rgba(225, 0, 255, 0.22)
+  }
+  75% {
+    box-shadow: 0 0px 28px rgba(0, 217, 255, 0.25), 0 0px 10px rgba(0, 217, 255, 0.25)
+  }
+
+  100% {
+    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25), 0 0px 10px rgba(225, 0, 255, 0.22)
   }
 }
 </style>

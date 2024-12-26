@@ -1,5 +1,8 @@
 import { ref } from "vue";
 import { layers } from "../engine/data/layers/layers";
+import { speedrunSettings } from "./speedrunSettings";
+
+const { speedrunData } = speedrunSettings();
 
 const display = ref('Home');
 const chosenLevel = ref(0);
@@ -18,6 +21,7 @@ export const settings = () => {
 
   const selectSpeedrun = () => {
     isSpeedrun.value = true;
+    chosenLevel.value = speedrunData[0].mapIndex;
     display.value = 'Game'
   }
 

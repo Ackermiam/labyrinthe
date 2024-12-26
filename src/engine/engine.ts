@@ -89,6 +89,7 @@ export class Engine {
     this.setView();
     this.registerEventListeners();
     this.tick();
+    if(isSpeedrun.value) this.sendBeginSpeedrunEvent();
   }
 
   restart(indexMap: number) {
@@ -123,6 +124,12 @@ export class Engine {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  sendBeginSpeedrunEvent() {
+    const event = new CustomEvent('beginSpeedrunLevel', {detail: 'begin'})
+
+    window.dispatchEvent(event);
   }
 
   registerEventListeners() {

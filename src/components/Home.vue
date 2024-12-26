@@ -4,7 +4,7 @@
     <div class="Home__Buttons">
       <button @click="triggerGame()">Aleatoire</button>
       <button @click="triggerArcadeMode()">Arcade</button>
-      <button @click="selectSpeedrun()">Performance</button>
+      <button @click="selectSpeedrun()">Speedrun</button>
     </div>
   </div>
 </template>
