@@ -10,7 +10,6 @@ import type { Engine } from "../engine";
 import { layers } from "../data/layers/layers.ts";
 import { settings } from "../../composables/handleSettings";
 
-
 const { isSpeedrun } = settings();
 
 export default class Character {
@@ -38,11 +37,11 @@ export default class Character {
   }
 
   tick() {
-    if(this.collideGround) {
+    if (this.collideGround) {
       this.updateCameraPosition();
       this.updateBoundingBox();
       this.checkGroundCollision();
-      if(this.canMove) {
+      if (this.canMove) {
         this.moveCharacter();
       }
     } else {
@@ -51,7 +50,7 @@ export default class Character {
   }
 
   createCharacter() {
-    const {x, z} = layers[this.engine.layer].characterPlacement;
+    const { x, z } = layers[this.engine.layer].characterPlacement;
     const box = new BoxGeometry(0.4, 0.4, 0.4);
     const material = new ShaderMaterial({
       transparent: true,
@@ -80,7 +79,7 @@ export default class Character {
     const mesh = new Mesh(box, material);
     mesh.userData.typeOfBlock = "character";
     this.mesh.add(mesh);
-    this.mesh.position.set(x -11.5, -0.3, z -11.5);
+    this.mesh.position.set(x - 11.5, -0.3, z - 11.5);
   }
 
   getEventMove() {
@@ -105,7 +104,8 @@ export default class Character {
     let newPosition = this.mesh.position.clone();
 
     if (this.vecteur_mouvement.z !== 0) {
-      anticipatedPosition.z += this.vecteur_mouvement.z * this.speed * this.engine.delta;
+      anticipatedPosition.z +=
+        this.vecteur_mouvement.z * this.speed * this.engine.delta;
       if (!this.checkObstacleCollision(anticipatedPosition)) {
         newPosition.z = anticipatedPosition.z;
       } else {
@@ -114,7 +114,8 @@ export default class Character {
     }
 
     if (this.vecteur_mouvement.x !== 0) {
-      anticipatedPosition.x += this.vecteur_mouvement.x * this.speed * this.engine.delta;
+      anticipatedPosition.x +=
+        this.vecteur_mouvement.x * this.speed * this.engine.delta;
       if (!this.checkObstacleCollision(anticipatedPosition)) {
         newPosition.x = anticipatedPosition.x;
       } else {
@@ -124,7 +125,6 @@ export default class Character {
 
     this.mesh.position.copy(newPosition);
   }
-
 
   checkObstacleCollision(position: Vector3): boolean {
     const characterBox = this.boundingBox.clone();
@@ -157,20 +157,32 @@ export default class Character {
         if (axis === "z") {
           if (this.vecteur_mouvement.z > 0) {
             // avance
-            position.z = Math.min(position.z, obstacleBox.min.z - this.boundingBox.max.z);
+            position.z = Math.min(
+              position.z,
+              obstacleBox.min.z - this.boundingBox.max.z
+            );
           } else if (this.vecteur_mouvement.z < 0) {
             // recule
-            position.z = Math.max(position.z, obstacleBox.max.z - this.boundingBox.min.z);
+            position.z = Math.max(
+              position.z,
+              obstacleBox.max.z - this.boundingBox.min.z
+            );
           }
         }
 
         if (axis === "x") {
           if (this.vecteur_mouvement.x > 0) {
             // droite
-            position.x = Math.min(position.x, obstacleBox.min.x - this.boundingBox.max.x);
+            position.x = Math.min(
+              position.x,
+              obstacleBox.min.x - this.boundingBox.max.x
+            );
           } else if (this.vecteur_mouvement.x < 0) {
             // gauche
-            position.x = Math.max(position.x, obstacleBox.max.x - this.boundingBox.min.x);
+            position.x = Math.max(
+              position.x,
+              obstacleBox.max.x - this.boundingBox.min.x
+            );
           }
         }
       }
@@ -182,7 +194,6 @@ export default class Character {
       this.mesh.position.x = position.x;
     }
   }
-
 
   updateCameraPosition() {
     this.engine.camera.position.x +=
@@ -197,9 +208,13 @@ export default class Character {
   }
 
   finishLevel() {
-    const finishSpeedrunLevel = new CustomEvent('finishSpeedrunLevel', {detail: 'finishSpeedrunLevel'})
-    const finishLevel = new CustomEvent('finishLevel', {detail: 'finishLevel'})
+    const finishSpeedrunLevel = new CustomEvent("finishSpeedrunLevel", {
+      detail: "finishSpeedrunLevel",
+    });
+    const finishLevel = new CustomEvent("finishLevel", {
+      detail: "finishLevel",
+    });
 
-    window.dispatchEvent(isSpeedrun.value ? finishSpeedrunLevel: finishLevel);
+    window.dispatchEvent(isSpeedrun.value ? finishSpeedrunLevel : finishLevel);
   }
 }

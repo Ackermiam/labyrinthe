@@ -30,11 +30,19 @@
       <h2>BRAVO !</h2>
       <h3 v-if="isFinished">Temps total: {{ calculateAllTimeMap() }}</h3>
       <button @click="menu()">Menu</button>
-      <button v-if="isFinished === false" @click="nextSpeedrunMap()">Suivant</button>
+      <button v-if="isFinished === false" @click="nextSpeedrunMap()">
+        Suivant
+      </button>
     </div>
     <div v-if="isSpeedrun" class="timeSpeedrun">
-      <p v-for="(data, index) in speedrunData" :key="index" :style="index === currentIndexDataRun ? 'color: white': 'color: purple'">
-        Map {{index + 1}} : {{ data.readableDuration }}
+      <p
+        v-for="(data, index) in speedrunData"
+        :key="index"
+        :style="
+          index === currentIndexDataRun ? 'color: white' : 'color: purple'
+        "
+      >
+        Map {{ index + 1 }} : {{ data.readableDuration }}
       </p>
     </div>
   </section>
@@ -47,26 +55,33 @@ import { settings } from "../composables/handleSettings";
 import { speedrunSettings } from "../composables/speedrunSettings";
 
 const { triggerHome, selectedLevel, isSpeedrun, chosenLevel } = settings();
-const { isFinished, selectedSpeedrunLevel, currentIndexDataRun, speedrunData, resetSpeedrunData, calculateAllTimeMap } = speedrunSettings();
+const {
+  isFinished,
+  selectedSpeedrunLevel,
+  currentIndexDataRun,
+  speedrunData,
+  resetSpeedrunData,
+  calculateAllTimeMap,
+} = speedrunSettings();
 
 let engine: Engine;
 
-const scene       = ref();
+const scene = ref();
 const displayMenu = ref(false);
 const showDetails = ref(false);
 
 const menu = () => {
   resetSpeedrunData();
   displayMenu.value = false;
-  isSpeedrun.value  = false;
+  isSpeedrun.value = false;
   isFinished.value = false;
   triggerHome();
-}
+};
 
 const restart = () => {
   engine.restart(chosenLevel.value);
   displayMenu.value = false;
-}
+};
 
 const random = () => {
   selectedLevel();
@@ -75,10 +90,10 @@ const random = () => {
 };
 
 const nextSpeedrunMap = () => {
-  const level = selectedSpeedrunLevel()
+  const level = selectedSpeedrunLevel();
   engine.restart(level);
   displayMenu.value = false;
-}
+};
 
 window.addEventListener("finishLevel", () => {
   displayMenu.value = true;
@@ -90,9 +105,9 @@ window.addEventListener("finishSpeedrunLevel", () => {
 
 watch(isFinished, (newFinished) => {
   setTimeout(() => {
-    alert(calculateAllTimeMap())
-  }, 100)
-})
+    alert(calculateAllTimeMap());
+  }, 100);
+});
 
 onMounted(() => {
   displayMenu.value = false;
@@ -148,7 +163,7 @@ h2 {
 h3 {
   color: white;
   font-size: 3em;
-  font-family: 'Archivo';
+  font-family: "Archivo";
 }
 
 .details {
@@ -223,21 +238,26 @@ h3 {
 }
 @keyframes animateSpeedrun {
   0% {
-    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25), 0 0px 10px rgba(225, 0, 255, 0.22)
+    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25),
+      0 0px 10px rgba(225, 0, 255, 0.22);
   }
 
   25% {
-    box-shadow: 0 0px 28px rgba(0, 217, 255, 0.25), 0 0px 10px rgba(0, 217, 255, 0.25)
+    box-shadow: 0 0px 28px rgba(0, 217, 255, 0.25),
+      0 0px 10px rgba(0, 217, 255, 0.25);
   }
   50% {
-    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25), 0 0px 10px rgba(225, 0, 255, 0.22)
+    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25),
+      0 0px 10px rgba(225, 0, 255, 0.22);
   }
   75% {
-    box-shadow: 0 0px 28px rgba(0, 217, 255, 0.25), 0 0px 10px rgba(0, 217, 255, 0.25)
+    box-shadow: 0 0px 28px rgba(0, 217, 255, 0.25),
+      0 0px 10px rgba(0, 217, 255, 0.25);
   }
 
   100% {
-    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25), 0 0px 10px rgba(225, 0, 255, 0.22)
+    box-shadow: 0 0px 28px rgba(234, 0, 255, 0.25),
+      0 0px 10px rgba(225, 0, 255, 0.22);
   }
 }
 </style>

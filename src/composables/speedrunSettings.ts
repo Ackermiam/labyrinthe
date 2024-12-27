@@ -75,7 +75,9 @@ const formatTime = (ms: number) => {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   const milliseconds = Math.floor(ms % 1000);
-  return `${minutes}m ${seconds < 10 ? "0" : ""}${seconds}s ${milliseconds < 100 ? "000": milliseconds }ms`;
+  return `${minutes}m ${seconds < 10 ? "0" : ""}${seconds}s ${
+    milliseconds < 100 ? "000" : milliseconds
+  }ms`;
 };
 
 window.addEventListener("finishSpeedrunLevel", () => {

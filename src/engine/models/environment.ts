@@ -1,6 +1,6 @@
 import { BoxGeometry, MeshPhongMaterial, Mesh, Box3 } from "three";
 import type { Engine } from "../engine";
-import { layers } from "../data/layers/layers.ts"
+import { layers } from "../data/layers/layers.ts";
 
 export default class Environment {
   mesh: any;
@@ -12,14 +12,12 @@ export default class Environment {
   constructor(engine: Engine) {
     this.mesh = new Mesh();
     this.meshsPlacement = [];
-    this.boundingBoxes = []
+    this.boundingBoxes = [];
     this.engine = engine;
     this.setEnvironment();
   }
 
-  tick() {
-
-  }
+  tick() {}
   setEnvironment() {
     this.createGround();
     this.createLevelPlacement();
@@ -31,25 +29,25 @@ export default class Environment {
     const material = new MeshPhongMaterial({
       color: 0xffffff,
       shininess: 15,
-      specular: 0x00cddb
+      specular: 0x00cddb,
     });
 
     const mesh = new Mesh(box, material);
     mesh.position.set(xPos, 0, zPos);
-    mesh.userData.typeOfBlock = 'obstacle'
+    mesh.userData.typeOfBlock = "obstacle";
     const boundingBox = new Box3().setFromObject(mesh);
-    this.boundingBoxes.push(boundingBox)
+    this.boundingBoxes.push(boundingBox);
     this.mesh.add(mesh);
   }
 
   createGround() {
-    const box = new BoxGeometry(24, .5, 24);
+    const box = new BoxGeometry(24, 0.5, 24);
     const material = new MeshPhongMaterial({
       color: 0xffffff,
     });
     const mesh = new Mesh(box, material);
     this.groundBoundingBox = new Box3().setFromObject(mesh);
-    mesh.userData.typeOfBlock = 'ground'
+    mesh.userData.typeOfBlock = "ground";
     mesh.position.y = -0.75;
     this.mesh.add(mesh);
   }
