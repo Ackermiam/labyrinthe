@@ -90,6 +90,9 @@ export class Engine {
     this.registerEventListeners();
     this.tick();
     if(isSpeedrun.value) this.sendBeginSpeedrunEvent();
+    setTimeout(() => {
+      this.character.canMove = true;
+    }, 100)
   }
 
   restart(indexMap: number) {

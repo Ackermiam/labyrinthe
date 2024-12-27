@@ -17,6 +17,13 @@ const speedrunData = reactive([
     finished: false
   },
   {
+    mapIndex: 6,
+    duration: 0,
+    readableDuration: '',
+    begin: false,
+    finished: false
+  },
+  /*{
     mapIndex: 1,
     duration: 0,
     readableDuration: '',
@@ -43,7 +50,7 @@ const speedrunData = reactive([
     readableDuration: '',
     begin: false,
     finished: false
-  }
+  }*/
 ])
 
 const startTimer = () => {
@@ -100,9 +107,18 @@ export const speedrunSettings = () => {
     })
   }
 
+  const calculateAllTimeMap = () => {
+    let finalTime = 0;
+    speedrunData.forEach(duration => {
+      finalTime += duration.duration
+    })
+    return formatTime(finalTime);
+  }
+
   return {
     selectedSpeedrunLevel,
     resetSpeedrunData,
+    calculateAllTimeMap,
     isFinished,
     currentIndexDataRun,
     speedrunData

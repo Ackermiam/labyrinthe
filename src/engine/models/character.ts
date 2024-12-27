@@ -21,9 +21,11 @@ export default class Character {
   boundingBox: Box3;
   light: PointLight;
   collideGround: boolean;
+  canMove: boolean;
 
   constructor(engine: Engine) {
     this.collideGround = true;
+    this.canMove = false;
     this.speed = 4.5;
     this.mesh = new Mesh();
     this.engine = engine;
@@ -37,10 +39,12 @@ export default class Character {
 
   tick() {
     if(this.collideGround) {
-      this.moveCharacter();
       this.updateCameraPosition();
       this.updateBoundingBox();
       this.checkGroundCollision();
+      if(this.canMove) {
+        this.moveCharacter();
+      }
     } else {
       this.finishLevel();
     }
@@ -195,7 +199,7 @@ export default class Character {
   finishLevel() {
     const finishSpeedrunLevel = new CustomEvent('finishSpeedrunLevel', {detail: 'finishSpeedrunLevel'})
     const finishLevel = new CustomEvent('finishLevel', {detail: 'finishLevel'})
-    
+
     window.dispatchEvent(isSpeedrun.value ? finishSpeedrunLevel: finishLevel);
   }
 }

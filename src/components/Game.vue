@@ -28,11 +28,12 @@
     </div>
     <div v-if="displayMenu && isSpeedrun" class="Home__win">
       <h2>BRAVO !</h2>
+      <h3 v-if="isFinished">Temps total: {{ calculateAllTimeMap() }}</h3>
       <button @click="menu()">Menu</button>
       <button v-if="isFinished === false" @click="nextSpeedrunMap()">Suivant</button>
     </div>
     <div v-if="isSpeedrun" class="timeSpeedrun">
-      <p v-for="(data, index) in speedrunData" :key="index">
+      <p v-for="(data, index) in speedrunData" :key="index" :style="index === currentIndexDataRun ? 'color: white': 'color: purple'">
         Map {{index + 1}} : {{ data.readableDuration }}
       </p>
     </div>
@@ -46,7 +47,7 @@ import { settings } from "../composables/handleSettings";
 import { speedrunSettings } from "../composables/speedrunSettings";
 
 const { triggerHome, selectedLevel, isSpeedrun, chosenLevel } = settings();
-const { isFinished, selectedSpeedrunLevel, currentIndexDataRun, speedrunData, resetSpeedrunData } = speedrunSettings();
+const { isFinished, selectedSpeedrunLevel, currentIndexDataRun, speedrunData, resetSpeedrunData, calculateAllTimeMap } = speedrunSettings();
 
 let engine: Engine;
 
@@ -54,25 +55,26 @@ const scene       = ref();
 const displayMenu = ref(false);
 const showDetails = ref(false);
 
-let menu = () => {
+const menu = () => {
   resetSpeedrunData();
   displayMenu.value = false;
   isSpeedrun.value  = false;
+  isFinished.value = false;
   triggerHome();
 }
 
-let restart = () => {
+const restart = () => {
   engine.restart(chosenLevel.value);
   displayMenu.value = false;
 }
 
-let random = () => {
+const random = () => {
   selectedLevel();
   engine.restart(chosenLevel.value);
   displayMenu.value = false;
 };
 
-let nextSpeedrunMap = () => {
+const nextSpeedrunMap = () => {
   const level = selectedSpeedrunLevel()
   engine.restart(level);
   displayMenu.value = false;
@@ -135,6 +137,11 @@ h2 {
   color: white;
   font-size: 5em;
   animation: animate infinite 4s;
+}
+
+h3 {
+  color: white;
+  font-size: 3em;
 }
 
 .details {
