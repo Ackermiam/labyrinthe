@@ -148,6 +148,7 @@ h2 {
 h3 {
   color: white;
   font-size: 3em;
+  font-family: 'Archivo';
 }
 
 .details {
@@ -196,6 +197,9 @@ h3 {
 
 .timeSpeedrun p {
   margin: 0 0 10px 0;
+}
+.timeSpeedrun p:last-child {
+  margin: 0;
 }
 
 @keyframes animate {
