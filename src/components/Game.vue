@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { Engine } from "../engine/engine";
 import { settings } from "../composables/handleSettings";
 import { speedrunSettings } from "../composables/speedrunSettings";
@@ -87,6 +87,12 @@ window.addEventListener("finishLevel", () => {
 window.addEventListener("finishSpeedrunLevel", () => {
   displayMenu.value = true;
 });
+
+watch(isFinished, (newFinished) => {
+  setTimeout(() => {
+    alert(calculateAllTimeMap())
+  }, 100)
+})
 
 onMounted(() => {
   displayMenu.value = false;
@@ -184,7 +190,7 @@ h3 {
   border: 1px solid rgba(255, 255, 255, 0.137);
   padding: 10px;
   border-radius: 8px;
-  width: 150px;
+  width: 180px;
   animation: animateSpeedrun 5s infinite;
 }
 
