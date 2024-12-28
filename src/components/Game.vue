@@ -53,7 +53,7 @@
         Map {{ index + 1 }} : {{ data.readableDuration }}
       </p>
     </div>
-    <div v-if="!displayMenu" class="controlsMobile">
+    <div v-if="!displayMenu && isMobile" class="controlsMobile">
       <div class="controlsMobile__container">
         <button
           class="controlsMobile--up"
@@ -109,6 +109,7 @@ let engine: Engine;
 const scene = ref();
 const displayMenu = ref(false);
 const showDetails = ref(false);
+const isMobile = window.innerWidth < 1000 ? true : false;
 
 const menu = () => {
   resetSpeedrunData();
@@ -200,7 +201,7 @@ onMounted(() => {
   cursor: pointer;
   width: 230px;
   transition: 0.3s;
-  margin-bottom: 25px;
+  margin: 10px;
 }
 
 button:hover {
