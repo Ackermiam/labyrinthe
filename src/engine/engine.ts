@@ -3,12 +3,10 @@ import {
   WebGLRenderer,
   PerspectiveCamera,
   Object3D,
-  DirectionalLight,
-  Clock
+  Clock,
 } from "three";
 
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { settings } from "../composables/handleSettings.ts"
+import { settings } from "../composables/handleSettings.ts";
 import Environment from "./models/environment.ts";
 import Character from "./models/character.ts";
 
@@ -59,12 +57,6 @@ export class Engine {
     this.renderer.setPixelRatio(this.pixelRatio);
     const resizeCanvas = window.devicePixelRatio > 1;
     this.renderer.setSize(width, height, resizeCanvas);
-    //const controls = new OrbitControls( this.camera, this.renderer.domElement );
-    //controls.update();
-
-    const directionalLight = new DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(0, 1, 1).normalize();
-    //this.scene.add(directionalLight);
 
     ref.appendChild(this.renderer.domElement);
 
@@ -89,10 +81,10 @@ export class Engine {
     this.setView();
     this.registerEventListeners();
     this.tick();
-    if(isSpeedrun.value) this.sendBeginSpeedrunEvent();
+    if (isSpeedrun.value) this.sendBeginSpeedrunEvent();
     setTimeout(() => {
       this.character.canMove = true;
-    }, 100)
+    }, 100);
   }
 
   restart(indexMap: number) {
@@ -130,7 +122,7 @@ export class Engine {
   }
 
   sendBeginSpeedrunEvent() {
-    const event = new CustomEvent('beginSpeedrunLevel', {detail: 'begin'})
+    const event = new CustomEvent("beginSpeedrunLevel", { detail: "begin" });
 
     window.dispatchEvent(event);
   }

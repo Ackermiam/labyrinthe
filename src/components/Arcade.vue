@@ -3,7 +3,11 @@
     <h1>Mode Arcade</h1>
     <h2>Choisis ta map</h2>
     <div class="Home__levels">
-      <div class="Home__levels__level" v-for="(level, index) in layers" :key="index">
+      <div
+        class="Home__levels__level"
+        v-for="(level, index) in layers"
+        :key="index"
+      >
         <button @click="triggerGame(index)">{{ level.name }}</button>
       </div>
     </div>
@@ -11,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import {settings} from "../composables/handleSettings";
-import {layers} from "../engine/data/layers/layers";
+import { settings } from "../composables/handleSettings";
+import { layers } from "../engine/data/layers/layers";
 
 const { triggerGame } = settings();
 </script>
@@ -31,7 +35,7 @@ const { triggerGame } = settings();
 h1 {
   color: white;
   font-size: 6em;
-  font-family: 'Play';
+  font-family: "Play";
   animation: animate infinite 4s;
   text-align: center;
 }
@@ -60,15 +64,14 @@ h1 {
 }
 
 .Home__levels__level {
-margin: 20px;
-text-align: center;
+  margin: 20px;
+  text-align: center;
 }
-
 
 h2 {
   color: white;
   font-size: 2em;
-  font-family: 'Play';
+  font-family: "Play";
 }
 
 button {
@@ -81,13 +84,13 @@ button {
   cursor: pointer;
   width: 230px;
   backdrop-filter: blur(20px);
-  transition: .3s;
+  transition: 0.3s;
   margin-right: 15px;
 }
 
 button:hover {
-border: 3px solid rgb(255, 59, 239);
-filter: drop-shadow(0px 0px 10px pink)
+  border: 3px solid rgb(255, 59, 239);
+  filter: drop-shadow(0px 0px 10px pink);
 }
 
 button:last-child {

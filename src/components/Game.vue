@@ -187,6 +187,7 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(20px);
+  text-align: center;
 }
 
 .menubutton {
@@ -213,10 +214,21 @@ h2 {
   font-size: 5em;
   animation: animate infinite 4s;
 }
+
+h3 {
+  color: white;
+  font-size: 3em;
+  font-family: "Archivo";
+}
+
 @media (max-width: 1000px) {
   h2 {
     font-size: 10vw;
     margin: 0 0 20px 0;
+  }
+
+  h3 {
+    margin: 0;
   }
 
   .menubutton {
@@ -230,12 +242,6 @@ h2 {
     flex-wrap: wrap;
     justify-content: center;
   }
-}
-
-h3 {
-  color: white;
-  font-size: 3em;
-  font-family: "Archivo";
 }
 
 .details {
