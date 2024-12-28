@@ -22,17 +22,25 @@
     </div>
     <div v-if="displayMenu && !isSpeedrun" class="Home__win">
       <h2>BRAVO !</h2>
-      <button @click="menu()">Menu</button>
-      <button @click="restart()">Recommencer</button>
-      <button @click="random()">Map aléatoire</button>
+      <div class="Home__win__menu">
+        <button @click="menu()" class="menubutton">Menu</button>
+        <button @click="restart()" class="menubutton">Recommencer</button>
+        <button @click="random()" class="menubutton">Map aléatoire</button>
+      </div>
     </div>
     <div v-if="displayMenu && isSpeedrun" class="Home__win">
       <h2>BRAVO !</h2>
       <h3 v-if="isFinished">Temps total: {{ calculateAllTimeMap() }}</h3>
-      <button @click="menu()">Menu</button>
-      <button v-if="isFinished === false" @click="nextSpeedrunMap()">
-        Suivant
-      </button>
+      <div class="Home__win__menu">
+        <button @click="menu()" class="menubutton">Menu</button>
+        <button
+          v-if="isFinished === false"
+          @click="nextSpeedrunMap()"
+          class="menubutton"
+        >
+          Suivant
+        </button>
+      </div>
     </div>
     <div v-if="isSpeedrun" class="timeSpeedrun">
       <p
@@ -44,6 +52,38 @@
       >
         Map {{ index + 1 }} : {{ data.readableDuration }}
       </p>
+    </div>
+    <div v-if="!displayMenu" class="controlsMobile">
+      <div class="controlsMobile__container">
+        <button
+          class="controlsMobile--up"
+          @touchstart.prevent="sendMoveMob('z')"
+          @touchend.prevent="sendStopMoveMob('z')"
+        >
+          Z
+        </button>
+        <button
+          class="controlsMobile--bottom"
+          @touchstart.prevent="sendMoveMob('s')"
+          @touchend.prevent="sendStopMoveMob('s')"
+        >
+          S
+        </button>
+        <button
+          class="controlsMobile--left"
+          @touchstart.prevent="sendMoveMob('q')"
+          @touchend.prevent="sendStopMoveMob('q')"
+        >
+          Q
+        </button>
+        <button
+          class="controlsMobile--right"
+          @touchstart.prevent="sendMoveMob('d')"
+          @touchend.prevent="sendStopMoveMob('d')"
+        >
+          D
+        </button>
+      </div>
     </div>
   </section>
 </template>
@@ -78,6 +118,13 @@ const menu = () => {
   triggerHome();
 };
 
+const moveMob = (dir: string) => {
+  return new CustomEvent("mobileTouch", { detail: dir });
+};
+const stopMoveMob = (dir: string) => {
+  return new CustomEvent("stopMobileTouch", { detail: dir });
+};
+
 const restart = () => {
   engine.restart(chosenLevel.value);
   displayMenu.value = false;
@@ -102,6 +149,13 @@ window.addEventListener("finishLevel", () => {
 window.addEventListener("finishSpeedrunLevel", () => {
   displayMenu.value = true;
 });
+
+const sendMoveMob = (dir: string) => {
+  window.dispatchEvent(moveMob(dir));
+};
+const sendStopMoveMob = (dir: string) => {
+  window.dispatchEvent(stopMoveMob(dir));
+};
 
 watch(isFinished, (newFinished) => {
   setTimeout(() => {
@@ -135,7 +189,7 @@ onMounted(() => {
   backdrop-filter: blur(20px);
 }
 
-button {
+.menubutton {
   padding: 25px 20px;
   font-family: "Archivo";
   font-size: 2em;
@@ -149,7 +203,7 @@ button {
 }
 
 button:hover {
-  border: 3px solid rgb(255, 59, 239);
+  border: 2px solid rgb(255, 59, 239);
   filter: drop-shadow(0px 0px 10px pink);
 }
 
@@ -158,6 +212,24 @@ h2 {
   color: white;
   font-size: 5em;
   animation: animate infinite 4s;
+}
+@media (max-width: 1000px) {
+  h2 {
+    font-size: 10vw;
+    margin: 0 0 20px 0;
+  }
+
+  .menubutton {
+    width: 180px;
+    font-size: 1.4em;
+    margin: 10px;
+  }
+
+  .Home__win__menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 h3 {
@@ -173,6 +245,9 @@ h3 {
   padding: 0 10px;
   width: auto;
   font-size: 25px;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.589);
+  background: none;
 }
 
 .Popin {
@@ -215,6 +290,55 @@ h3 {
 }
 .timeSpeedrun p:last-child {
   margin: 0;
+}
+
+.controlsMobile {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  width: 145px;
+  height: 145px;
+}
+
+.controlsMobile__container button {
+  height: 47px;
+  width: 47px;
+  border: 2px solid rgba(255, 255, 255, 0.479);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+}
+
+.controlsMobile__container {
+  position: relative;
+  height: 100%;
+}
+
+.controlsMobile--up {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.controlsMobile--bottom {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.controlsMobile--left {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+.controlsMobile--right {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
 }
 
 @keyframes animate {

@@ -16,5 +16,7 @@ const { display } = settings();
 </script>
 
 <style scoped>
-
+.Home {
+  overflow-x: hidden;
+}
 </style>

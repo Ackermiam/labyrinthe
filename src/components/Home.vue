@@ -30,11 +30,12 @@ const { triggerArcadeMode, triggerGame, selectSpeedrun } = settings();
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 h1 {
   color: white;
-  font-size: 6em;
+  font-size: 5vw;
   font-family: "Play";
   animation: animate infinite 4s;
 }
@@ -50,16 +51,29 @@ button {
   width: 230px;
   backdrop-filter: blur(20px);
   transition: 0.3s;
-  margin-right: 15px;
+  margin: 15px;
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: 10vw;
+  }
+
+  button {
+    width: 180px;
+    font-size: 1.4em;
+  }
+
+  .Home__Buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 button:hover {
   border: 3px solid rgb(255, 59, 239);
   filter: drop-shadow(0px 0px 10px pink);
-}
-
-button:last-child {
-  margin-right: 0px;
 }
 
 @keyframes animate {

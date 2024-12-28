@@ -17,13 +17,6 @@ const speedrunData = reactive([
     finished: false,
   },
   {
-    mapIndex: 6,
-    duration: 0,
-    readableDuration: "",
-    begin: false,
-    finished: false,
-  },
-  /*{
     mapIndex: 1,
     duration: 0,
     readableDuration: '',
@@ -50,7 +43,7 @@ const speedrunData = reactive([
     readableDuration: '',
     begin: false,
     finished: false
-  }*/
+  }
 ]);
 
 const startTimer = () => {

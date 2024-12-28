@@ -28,6 +28,14 @@ const { triggerGame } = settings();
   padding: 50px 0;
 }
 
+h1 {
+  color: white;
+  font-size: 6em;
+  font-family: 'Play';
+  animation: animate infinite 4s;
+  text-align: center;
+}
+
 .Home__levels {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -37,6 +45,10 @@ const { triggerGame } = settings();
   .Home__levels {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1 {
+    font-size: 4em;
   }
 }
 
@@ -52,13 +64,6 @@ margin: 20px;
 text-align: center;
 }
 
-h1 {
-  color: white;
-  font-size: 6em;
-  font-family: 'Play';
-  animation: animate infinite 4s;
-  text-align: center;
-}
 
 h2 {
   color: white;

@@ -91,11 +91,32 @@ export default class Character {
       if (key == "d") this.vecteur_mouvement.x = 1;
       if (key == "q") this.vecteur_mouvement.x = -1;
     });
+
+    window.addEventListener("mobileTouch", (event) => {
+      const key = event.detail.toLowerCase();
+
+      if (key == "z") this.vecteur_mouvement.z = -1;
+      if (key == "s") this.vecteur_mouvement.z = 1;
+      if (key == "d") this.vecteur_mouvement.x = 1;
+      if (key == "q") this.vecteur_mouvement.x = -1;
+    });
+
     window.addEventListener("keyup", (event) => {
       const key = event.key.toLowerCase();
 
-      if (key === "z" || key === "s") this.vecteur_mouvement.z = 0;
-      if (key === "q" || key === "d") this.vecteur_mouvement.x = 0;
+      if (key === "z") this.vecteur_mouvement.z = 0;
+      if (key === "q") this.vecteur_mouvement.x = 0;
+      if (key === "s") this.vecteur_mouvement.z = 0;
+      if (key === "d") this.vecteur_mouvement.x = 0;
+    });
+
+    window.addEventListener("stopMobileTouch", (event) => {
+      const key = event.detail.toLowerCase();
+
+      if (key === "z") this.vecteur_mouvement.z = 0;
+      if (key === "q") this.vecteur_mouvement.x = 0;
+      if (key === "s") this.vecteur_mouvement.z = 0;
+      if (key === "d") this.vecteur_mouvement.x = 0;
     });
   }
 
