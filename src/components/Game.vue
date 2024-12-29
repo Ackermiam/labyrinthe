@@ -1,24 +1,30 @@
 <template>
   <section class="Home">
     <div ref="scene" class="Scene"></div>
+    <button class="cmd" @click="isMobile = !isMobile">
+      <img src="../assets/cmd.png"/>
+    </button>
     <button class="details" @click="showDetails = !showDetails">?</button>
     <div v-if="showDetails" class="Popin">
-      <div class="Popin__controls">
-        <p>Z</p>
-        <span>Avancer</span>
+      <div class="Popin__container">
+        <div class="Popin__controls">
+          <p>Z</p>
+          <span>Avancer</span>
+        </div>
+        <div class="Popin__controls">
+          <p>Q</p>
+          <span>Gauche</span>
+        </div>
+        <div class="Popin__controls">
+          <p>S</p>
+          <span>Reculer</span>
+        </div>
+        <div class="Popin__controls">
+          <p>D</p>
+          <span>Droite</span>
+        </div>
       </div>
-      <div class="Popin__controls">
-        <p>Q</p>
-        <span>Gauche</span>
-      </div>
-      <div class="Popin__controls">
-        <p>S</p>
-        <span>Reculer</span>
-      </div>
-      <div class="Popin__controls">
-        <p>D</p>
-        <span>Droite</span>
-      </div>
+      <button @click="menu()" class="menubutton">Aller au Menu</button>
     </div>
     <div v-if="displayMenu && !isSpeedrun" class="Home__win">
       <h2>BRAVO !</h2>
@@ -53,7 +59,7 @@
         Map {{ index + 1 }} : {{ data.readableDuration }}
       </p>
     </div>
-    <div v-if="!displayMenu && isMobile" class="controlsMobile">
+    <div v-if="!displayMenu && isMobile && !showDetails" class="controlsMobile">
       <div class="controlsMobile__container">
         <button
           class="controlsMobile--up"
@@ -109,7 +115,7 @@ let engine: Engine;
 const scene = ref();
 const displayMenu = ref(false);
 const showDetails = ref(false);
-const isMobile = window.innerWidth < 1000 ? true : false;
+const isMobile = ref(false);
 
 const menu = () => {
   resetSpeedrunData();
@@ -167,6 +173,7 @@ watch(isFinished, (newFinished) => {
 onMounted(() => {
   displayMenu.value = false;
   engine = new Engine(scene.value);
+  isMobile.value = window.innerWidth < 1000 ? true : false
 });
 </script>
 
@@ -197,16 +204,25 @@ onMounted(() => {
   font-size: 2em;
   background: none;
   color: white;
-  border: 3px solid white;
+  border: 2px solid white;
   cursor: pointer;
   width: 230px;
   transition: 0.3s;
   margin: 10px;
 }
 
-button:hover {
-  border: 2px solid rgb(255, 59, 239);
+.menubutton:hover, .details:hover {
+  border: 2px solid rgb(121, 19, 146);
   filter: drop-shadow(0px 0px 10px pink);
+}
+
+.cmd:hover {
+  filter: drop-shadow(0px 0px 10px pink);
+}
+
+button {
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 h2 {
@@ -220,6 +236,23 @@ h3 {
   color: white;
   font-size: 3em;
   font-family: "Archivo";
+}
+
+.Popin {
+  position: absolute;
+  backdrop-filter: blur(30px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  text-align: center;
+  width: 50%;
+  height: 50%;
 }
 
 @media (max-width: 1000px) {
@@ -243,6 +276,12 @@ h3 {
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .Popin {
+    width: 80%;
+    height: 60%;
+    padding: 15px 0;
+  }
 }
 
 .details {
@@ -253,30 +292,39 @@ h3 {
   width: auto;
   font-size: 25px;
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.589);
+  border: 2px solid rgba(255, 255, 255, 0);
   background: none;
 }
 
-.Popin {
+.cmd {
   position: absolute;
-  width: 60%;
-  height: 60%;
-  backdrop-filter: blur(30px);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid white;
+  top: 8px;
+  right: 70px;
+  border: none;
+  background: none;
+}
+
+.cmd img {
+  width: 35px;
+  height: auto;
+}
+
+.Popin__container {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  color: white;
-  text-align: center;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .Popin__controls p {
   border: 2px solid white;
-  width: 60px;
-  padding: 10px 0;
+  padding: 10px 15px;
+  margin: 15px;
+}
+
+.Popin__controls {
+  margin: 15px;
 }
 
 .timeSpeedrun {
