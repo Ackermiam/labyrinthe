@@ -1,7 +1,6 @@
 # Labyrinthe
 
-![Menu](/labmenu.PNG)
-![Jeu](/labfinal.PNG)
+![Jeu](/presentation/labfinal.PNG)
 
 ## Principe du jeu
 
