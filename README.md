@@ -1,5 +1,18 @@
-# Vue 3 + TypeScript + Vite
+# Labyrinthe
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+![Menu](/labmenu.PNG)
+![Jeu](/labfinal.PNG)
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Principe du jeu
+
+Plongé dans le noir, avec pour seule lumière celle que vous émettez, vous devez réussir à sortir du labyrinthe dans lequel vous êtes prisonnier.
+
+## Les principales fonctionnalités
+
+- Un système de collision
+- Un système de génération d'environnement
+- Déplacement de la caméra
+- Se déplacer avec **ZQSD**
+- Chargement de map aléatoire
+- Choix de la map en mode arcade
+- Mode speedrun: 5 map à faire le plus rapidement possible
